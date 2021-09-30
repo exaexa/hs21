@@ -26,7 +26,7 @@ K základním vlastnostem doimplementujte ještě alespoň 3 z následujících 
 - efekt `eroze` (všechny pixely které hraničí s průhlednou barvou zmizí) a `dilatace` (všechny průhledné pixely které hraničí s nějakou barvou dostanou barvu podle nejčastější barvy sousedů), [podobně jako v GIMPu](https://docs.gimp.org/2.8/en/filters-generic.html)
 
 Požadavky:
-- V průběhu kreslení složitějších tvarů by mělo být jasně vidět kde je první označený bod (aby si ho uživatel nemusel pamatovat). V ideálním případě uživatel předem uvidí, jak velký obdélník nebo kruh bude ještě před "potvrzenim".
+- V průběhu kreslení složitějších tvarů by mělo být jasně vidět kde je první označený bod (aby si ho uživatel nemusel pamatovat). V ideálním případě uživatel předem uvidí, jak velký obdélník nebo kruh bude ještě před "potvrzením".
 - Zkuste nějakým rozumným způsobem pěkně a rozšiřitelně pokrýt všechny možné chyby, kterých se na vstupu může dopustit uživatel, např. pokud začne kreslit obdélník a místo `x` nebo `z` ho zakončí klávesou pro kreslení čáry.
   - Těžší bonus: Alternativně navrhněte nějaký systém ovládání, ve kterém jsou všechny kombinace akcí dobře definované, a ideálně je připravený na složitější úkoly vyžadující celou sekvenci vstupů, jako např. kreslení Beziérových křivek. (K programu pak ale prosím přidejte komentář s návodem na ovládání, případně nějakou alternativu `vimtutor`u).
 
@@ -44,12 +44,14 @@ Pro oba případy můžete využít jednoduché připravené aplikace, které "u
 - [gloss.hs](./gloss.hs) -- potřebuje knihovnu `gloss`, tu si můžete nainstalovat pomocí `cabal install gloss`, zdrojový kód "mimo projekt" skompilujete pomocí `ghc -package gloss gloss.hs -o gloss`
 - [brick.hs](./brick.hs) -- potřebuje knihovny `brick` a `vty`, po jejich nainstalování kompilujte pomocí `ghc -package brick -package vty brick.hs -o brick`
 
-## Bonusy
+### Datové struktury
 
-- Celou bitmapu můžete reprezentovat jako seznam seznamů, ale mnohem lepší je použít arraye (přecejen jsou rychlejší...). Nízkoúrovňové funkcionální arraye z `Data.Array` jsou poněkud moc generické (tj. pro začátečníky nepoužitelné), proto je výrazně lepší je používat obalené v [`Data.Vector`](https://hackage.haskell.org/package/vector-0.12.1.2/docs/Data-Vector.html). Vektor je v tomto případě víceméně ekvivalent konstantní C-čkové arraye.
-- Vektory jsou "konstantní" a copy-on-write, tj. změna jednoho prvku někde uprostřed je docela drahá. Místo toho můžete zkusit jednu z následujících možností:
-  - Vektor můžete nejdřív vyrobit jako seznam (to je díky lazy vyhodnocování většinou "zadarmo"), a na ten pak zavolat `fromList`.
-  - Použít [`Data.Vector.Mutable`](https://hackage.haskell.org/package/vector-0.12.1.2/docs/Data-Vector-Mutable.html) (to je víceméně obyčejná C-čková zapisovatelná array). Čtení a úpravy mutovatelného vektoru jsou ale operace, u kterých záleží na pořadí provádění, takže je nutné je "spojovat" opatrně, stejným mechanismem jako IO akce. [Příklad s bubblesortem](https://www.ksi.mff.cuni.cz/~kratochvil/haskell/source/MVectorBubbleSort.hs).
+Celou bitmapu můžete reprezentovat jako seznam seznamů, ale mnohem lepší je použít arraye (přecejen jsou rychlejší...). Nízkoúrovňové funkcionální arraye z `Data.Array` jsou poněkud moc generické (tj. pro začátečníky nepoužitelné), proto je výrazně lepší je používat obalené v [`Data.Vector`](https://hackage.haskell.org/package/vector-0.12.1.2/docs/Data-Vector.html). Vektor je v tomto případě víceméně ekvivalent konstantní C-čkové arraye.
+
+Vektory jsou "konstantní" a copy-on-write, tj. změna jednoho prvku někde uprostřed je docela drahá. Místo toho můžete zkusit jednu z následujících možností:
+
+- Vektor můžete nejdřív vyrobit jako seznam (to je díky lazy vyhodnocování většinou "zadarmo"), a na ten pak zavolat `fromList`.
+- Použít [`Data.Vector.Mutable`](https://hackage.haskell.org/package/vector-0.12.1.2/docs/Data-Vector-Mutable.html) (to je víceméně obyčejná C-čková zapisovatelná array). Čtení a úpravy mutovatelného vektoru jsou ale operace, u kterých záleží na pořadí provádění, takže je nutné je "spojovat" opatrně, stejným mechanismem jako IO akce. [Příklad s bubblesortem](https://www.ksi.mff.cuni.cz/~kratochvil/haskell/source/MVectorBubbleSort.hs).
 
 ## Odevzdání a hodnocení
 
