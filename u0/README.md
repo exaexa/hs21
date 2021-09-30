@@ -47,7 +47,7 @@ Add informative comments to each field in the cabal file (y/n)? [default: n] y
 
 #### 2. Programování
 
-Pokud se všechno povedlo, meli byste mít k dispozici defaultní "poloprázdný" soubor `Main.hs`. Ten můžete normálně editovat. Projekt můžete kdykoliv nechat sestavit a spustit pomocí `cabal run`. (Defaultní `Main.hs` většinou výpíše něco jako `Hello Haskell!`).
+Pokud se všechno povedlo, meli byste mít k dispozici defaultní "poloprázdný" soubor `Main.hs`. Ten můžete normálně editovat. Projekt můžete kdykoliv nechat sestavit a spustit pomocí `cabal run`. (Defaultní `Main.hs` většinou vypíše něco jako `Hello Haskell!`).
 
 Další příkazy:
 - Projekt můžete případně nechat "jen sestavit" pomocí `cabal build`
@@ -66,7 +66,9 @@ To by mělo vyrobit archiv `u0-prijmeni-verze.tar.gz`, ten nahrajte do SISu do o
 
 **Demonstrační balík je k dispozici [tady](u0-kratochvil-0.1.0.0.tar.gz) a rozbalený [tady](u0-kratochvil-0.1.0.0/).** (Demonstrační program ale řeší trochu jednodušší úkol než DÚ0.)
 
-Kromě toho je vhodné si program předem nechat trochu zkontrolovat automatickými prostředky. Například je vhodné si zapnout všechna kompilační varování tím že do souboru `.cabal` do sekce s `executable` přidáte kompilační flagy:
+#### Kontrola kódu před odevzdáním
+
+Vždycky je vhodné si program před odevzdáním nechat trochu zkontrolovat automatickými prostředky. Například je vhodné si zapnout všechna kompilační varování tím, že do souboru `.cabal` do sekce s `executable` přidáte kompilační flagy:
 ```
 executable u0-prijmeni
 
@@ -77,7 +79,7 @@ executable u0-prijmeni
 
 Projekt můžete s novými `ghc-options` nechat přestavět celý tím, že provedete `cabal clean` (což je víceméně tosamé jako `make clean`).
 
-Formát balíku si můžete nechat zkontrolovat pomocí `cabal check`, ale varování jsou určena spíš do situace kdy balík chcete publikovat, většinu není pro potřeby DÚ potřeba řešit.
+Formát balíku si můžete nechat zkontrolovat pomocí `cabal check`, ale varování jsou určena spíš pro situace kdy balík chcete publikovat, většinu není pro potřeby DÚ potřeba řešit.
 
 Zdrojový kód si můžete nechat "zkontrolovat" na běžné nedostatky pomocí linteru, nejběžnější je asi `hlint`. Ten nainstalujete pomocí `cabal install hlint`. Instalace chvíli trvá (odhadem max. cca 10 minut). Hlint se nainstaluje do adresáře, ve kterém jsou všechny spustitelné programy nainstalované cabalem, na Unixech to bývá `~/.cabal/bin` (ten si můžete pro větší pohodlí přidat do `PATH`). Zdrojový soubor pak můžete nechat zkontrolovat pomocí `~/.cabal/bin/hlint Main.hs` (případně jen `hlint Main.hs`, pokud tam máte správně nastavenou cestu).
 
