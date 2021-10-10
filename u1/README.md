@@ -51,7 +51,7 @@ Celou bitmapu můžete reprezentovat jako seznam seznamů, ale mnohem lepší je
 Vektory jsou "konstantní" a copy-on-write, tj. změna jednoho prvku někde uprostřed je docela drahá. Místo toho můžete zkusit jednu z následujících možností:
 
 - Vektor můžete nejdřív vyrobit jako seznam (to je díky lazy vyhodnocování většinou "zadarmo"), a na ten pak zavolat `fromList`.
-- Použít [`Data.Vector.Mutable`](https://hackage.haskell.org/package/vector-0.12.1.2/docs/Data-Vector-Mutable.html) (to je víceméně obyčejná C-čková zapisovatelná array). Čtení a úpravy mutovatelného vektoru jsou ale operace, u kterých záleží na pořadí provádění, takže je nutné je "spojovat" opatrně, stejným mechanismem jako IO akce. [Příklad s bubblesortem](https://www.ksi.mff.cuni.cz/~kratochvil/haskell/source/MVectorBubbleSort.hs).
+- Použít [`Data.Vector.Mutable`](https://hackage.haskell.org/package/vector-0.12.1.2/docs/Data-Vector-Mutable.html) (to je víceméně obyčejná C-čková zapisovatelná array). Čtení a úpravy mutovatelného vektoru jsou ale operace, u kterých záleží na pořadí provádění, takže je nutné je "spojovat" opatrně, stejným mechanismem jako IO akce. [Příklad s bubblesortem](https://www.ksi.mff.cuni.cz/~kratochvil/haskell/source/MVectorBubbleSort.hs). Mutovatelné vektory fungují i bez `IO` -- stačí jim monáda která umí zaručit lokální ordering paměťových operací, například `STM` ("software transactional memory") dostupná nejjednodušším způsobem pomocí funkce [`runST`](https://hackage.haskell.org/package/base-4.15.0.0/docs/Control-Monad-ST.html#v:runST).
 
 ## Odevzdání a hodnocení
 
