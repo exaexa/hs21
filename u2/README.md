@@ -92,13 +92,22 @@ a
 `bencode2json` které převádí JSON (nebo Bencode) na standardním vstupu na
 Bencode (nebo JSON) na standardním výstupu.
 
-*Bonus 2A*:
-JSON vypisujte "pěkně" pomocí knihovny
+**Bonus 2A**:
+JSON vypisujte "pěkně", tj. s odřádkováním a odsazením, ideálně pomocí knihovny
 [`aeson-pretty`](https://hackage.haskell.org/package/aeson-pretty).
 
-*Bonus 2B* (`*`):
+**Bonus 2B** (`*`):
 To samé zprovozněte i pro YAML pomocí balíku
 [`yaml`](https://hackage.haskell.org/package/yaml).
+
+**Příklad**: Výše uvedený pětimetrový Bencode by měly programy správně
+zkonvertovat na následující JSON a načíst ho zpět:
+```
+{
+  "hodnota": 5,
+  "jednotka": "metr"
+}
+```
 
 ## Část třetí -- schémata
 
