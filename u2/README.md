@@ -3,32 +3,32 @@
 [Bencode](https://en.wikipedia.org/wiki/Bencode) je formát výměny dat podobný
 JSONu a YAMLu nebo CBORu, kterým jde poměrně jednoduše vyjadřovat stromové
 struktury dat vyrobené ze slovníků, arrayí, stringů, apod. Používá se v
-několika široce používaných síťových protokolech, z nichž nejznámější je asi
+několika široce rozšířených síťových protokolech, z nichž nejznámější je asi
 [bittorrent](https://en.wikipedia.org/wiki/BitTorrent).
 
 Hlavní výhoda Bencode oproti JSONu a jiným lidským formátům je, že kódování dat
 do Bencode je bijektivní funkce, tj. pro každá data existuje přesně jeden
-validní zápis, bencodové stringu je tedy možné bez potíží přímo hashovat a
-podepisovat, a ekvivalence dat jde zjistit prostě porovnáním stringů. Binární
-data jde navíc uložit přímo do stringů bez "escapování", což zjednodušuje např.
-přenos obrázků a v případě přenosu velkého množství dat vede ke značným
-úsporám. Nevýhodou je, že výsledek nevypadá úplně tak neskutečně skvěle jako
-hezky zformátovaný YAML, ale formát se pořád se dá celkem bez potíží editovat
-ručně. (Rozhodně to bolí míň než editovat XML.)
+validní zápis. Bencodové stringy je tedy možné bez potíží přímo hashovat a
+podepisovat, a ekvivalence dat jde ekvivalentně zjistit hrubým porovnáním
+stringů (případně hashů). Binární data jde navíc uložit přímo do stringů bez
+"escapování", což zjednodušuje např.  přenos obrázků, a v případě přenosu
+velkého množství dat vede ke značným úsporám. Nevýhodou je, že výsledek
+nevypadá tak úplně skvěle jako hezky zformátovaný YAML; data se naštěstí pořád
+dají celkem bez potíží editovat ručně. (Rozhodně to bolí míň než editovat XML.)
 
 Kódování je poměrně jednoduché:
 - celé číslo se zakóduje zapsáním v desítkové soustavě mezi značkami `i` a `e`,
-  tj. nula se zakóduje jako `i0e`, 123
-- string se zakóduje pomocí zapsání délky desítkovým číslem následovaným
+  tj. nula se zakóduje jako `i0e`, 123 se zapíše jako `i123e`, apod.
+- String se zakóduje pomocí zapsání délky desítkovým číslem následovaným
   dvojtečkou a obsahem stringu. Prázdný string se zakóduje jako `0:`, "ahoj" se
   zapíše jako `4:ahoj`, a tento string jde "nestovat" do dalšího stringu jako
   `6:4:ahoj` (obsahuje "4:ahoj")
-- seznam hodnot začíná písmenem `l` a končí písmenem `e`, hodnoty se zapíšou za
+- Seznam hodnot začíná písmenem `l` a končí písmenem `e`, hodnoty se zapíšou za
   sebe bez oddělovače. Např. seznam obsahující seznam čísla a stringu a jedno
   číslo navíc se zapíše jako `lli10e4:ahojei20ee`.
-- slovník se zapíše podobně mezi písmena `d` a `e`, liché položky jsou vždy
+- Slovník se zapíše podobně mezi písmena `d` a `e`, liché položky jsou vždy
   klíče a sudé jsou odpovídající hodnoty -- například "5 metrů" by šlo zapsat
-  jako `d7:hodnotai5e8:jednotka4:metre` (klíče musí být lexikálně seřazené)
+  jako `d7:hodnotai5e8:jednotka4:metre` (klíče musí být lexikálně seřazené).
 
 Důležité drobnosti:
 - délka stringů se měří v bajtech, pro účely úkolu ale můžete použít i
@@ -45,10 +45,10 @@ Důležité drobnosti:
 
 Protože číst data v dlooooooooooouhém řádku je otrava, vyrobte program
 `bencode_pretty` který na standardním vstupu načte bencode, a na standardním
-výstupu vypíše pěknou, odřádkovanou a odsazenou variantu. Přesný formát
-odsazení si můžete zvolit libovolně.
+výstupu vypíše pěknou, odřádkovanou a odsazenou variantu.
 
-Například bencode `d7:hodnotai5e8:jednotka4:metre` by program mohl vypsat jako:
+**Příklad**: Bencode `d7:hodnotai5e8:jednotka4:metre` by program mohl
+zformátovat následovně:
 ```
 d
  7:hodnota
@@ -58,9 +58,9 @@ d
 e
 ```
 
-Formát výstupu si zvolte zcela libovolně, cokoliv přehledného je OK.
+Přesný formát odsazení si můžete zvolit libovolně, cokoliv přehledného je OK.
 
-Cílem úkolu je vyzkoušet si práci s parsovacími kombinátory a prettyprintingem,
+Cílem úkolu je vyzkoušet si práci s parsovacími kombinátory a formátováním dat,
 řešení tedy pokud možno strukturujte následovně:
 - navrhněte si vhodnou datovou strukturu pro reprezentaci dat. Můžete
   předpokládat, že všechna data v úkolu 2 jsou ASCII, tj. problémy s velikostmi
@@ -73,15 +73,15 @@ Cílem úkolu je vyzkoušet si práci s parsovacími kombinátory a prettyprinti
   [`attoparsec`](https://hackage.haskell.org/package/attoparsec) (nebo
   jakýkoliv jiný monádový parser, třeba ručně vyrobený)
 
-*Bonus 1A*:
-Formátování vstupu nedělejte ručně, ale použijte nějakou specializovanou
+**Bonus 1A**:
+Formátování výstupu neimplementujte ručně, ale použijte nějakou specializovanou
 knihovnu na prettyprinting, ideálně
 [`pretty`](https://hackage.haskell.org/package/pretty)
 
 ## Část druhá -- konverze
 
 Knihovna [`aeson`](https://hackage.haskell.org/package/aeson) dovoluje pro
-prakticky jakékoliv haskellové hodnoty poměrně příjemně vyrábět odpovídající
+prakticky jakékoliv Haskellové hodnoty poměrně příjemně vyrábět odpovídající
 JSONové reprezentace, a hodnoty pak načítat a vypisovat jako JSON.
 
 Pro zvolenou reprezentaci Bencode vyrobte instance typových tříd
@@ -101,7 +101,7 @@ To samé zprovozněte i pro YAML pomocí balíku
 [`yaml`](https://hackage.haskell.org/package/yaml).
 
 **Příklad**: Výše uvedený pětimetrový Bencode by měly programy správně
-zkonvertovat na následující JSON a načíst ho zpět:
+zkonvertovat na následující JSONu, a načíst zpátky:
 ```
 {
   "hodnota": 5,
@@ -111,10 +111,10 @@ zkonvertovat na následující JSON a načíst ho zpět:
 
 ## Část třetí -- schémata
 
-Formát Bencode nevyžaduje (podobně jako JSON) prakticky žádné konvence o
-obsahu; to ale v realistických aplikacích není úplně rozumné. Tradičním
-požadavkem na formát dat je určitá uniformita arrayí: všechny položky v každé
-arrayi by měly být "stejného typu", aby šly pohodlně ukládat za sebe do
+Formát Bencode nevyžaduje (podobně jako JSON) prakticky žádné dodržování
+konvencí o obsahu; to ale v realistických aplikacích není úplně rozumné.
+Tradičním požadavkem na formát dat je určitá uniformita arrayí: všechny položky
+v každé arrayi by měly být "stejného typu", aby šly pohodlně ukládat za sebe do
 alokované paměti.
 
 Vyrobte program `bencode_check`, který Bencode na vstupu zkontroluje následovně:
@@ -131,9 +131,9 @@ Vyrobte program `bencode_check`, který Bencode na vstupu zkontroluje následovn
 (Z pravidel můžete (mimo jiné) odvodit, že všechny "nestované arraye" musí mít
 stejnou hloubku.)
 
-Pokud kontrola projde, program UNIXově nezahlásí žádnou chybu a nic nevypíše; v
-případě nalezených chyb vypiště suše `chyba`, volitelně vraťte nenulový exit
-status (např. aby bylo chybu možné detekovat z shellu).
+Pokud kontrola projde, program UNIXovitě nezahlásí žádnou chybu a nic nevypíše; v
+případě nalezených chyb vypiště suše `chyba`; volitelně navíc můžete vrátit
+nenulový exit status (např. aby bylo chybu možné detekovat z shellu).
 
 **Bonus 3A (error messages)**:
 Program vypíše chybu i s "lokací" prvního nalezeného problému ve stromě, např.:
@@ -169,9 +169,11 @@ datovou strukturou, a odvozené schéma při úspěšné kontrole vypište (uži
 pak může porovnat s očekáváním).
 
 **Bonus 3C** (`***`):
-Vyrobte program umožňující zkontrolovat kompatibilitu 2 schémat. Pravidlo: data
-A vyhovují schématu B pokud je schéma A "podmnožina" schématu B -- v A např.
-některé klíče slovníků můžou chybět, a schémata arrayí nemusí být úplná protože
-některé arraye v A mohou být prázdné. Pro načítání schémat doporučuju zneužít
-typové třídy `FromJSON` a `ToJSON` podobně jako to dělá balík `yaml`, nebo si
-vyrobit vlastní třídy `FromBencode` a `ToBencode`.
+Vyrobte program umožňující zkontrolovat kompatibilitu dvou schémat. Pravidlo:
+data A vyhovují schématu B pokud je schéma A "podmnožina" schématu B (ve
+schématu A např. některé klíče slovníků můžou chybět, a schémata arrayí nemusí
+být úplná, protože některé arraye v A mohou být prázdné).
+
+Pro načítání schémat je vhodné zneužít typové třídy `FromJSON` a `ToJSON`
+podobně jako to dělá balík `yaml`, případně si vyrobit vlastní třídy
+`FromBencode` a `ToBencode`.
