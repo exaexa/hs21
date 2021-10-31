@@ -111,12 +111,13 @@ zkonvertovat na následující JSON a načíst ho zpět:
 
 ## Část třetí -- schémata
 
-Formát Bencode nevyžaduje prakticky žádné konvence o obsahu; to ale v
-realistických aplikacích není úplně rozumné. Tradičním požadavkem na formát dat
-je uniformita arrayí: všechny položky v každé arrayi by měly být "stejného
-typu".
+Formát Bencode nevyžaduje (podobně jako JSON) prakticky žádné konvence o
+obsahu; to ale v realistických aplikacích není úplně rozumné. Tradičním
+požadavkem na formát dat je určitá uniformita arrayí: všechny položky v každé
+arrayi by měly být "stejného typu", aby šly pohodlně ukládat za sebe do
+alokované paměti.
 
-Vyrobte program `bencode_check` který Bencode na vstupu zkontroluje následovně:
+Vyrobte program `bencode_check`, který Bencode na vstupu zkontroluje následovně:
 
 - všechny prvky v arrayích jsou stejného "typu", tj. všechny buď čísla, nebo
   stringy, nebo arraye, nebo slovníky
@@ -134,7 +135,7 @@ Pokud kontrola projde, program UNIXově nezahlásí žádnou chybu a nic nevypí
 případě nalezených chyb vypiště suše `chyba`, volitelně vraťte nenulový exit
 status (např. aby bylo chybu možné detekovat z shellu).
 
-*Bonus 3A (error messages)*:
+**Bonus 3A (error messages)**:
 Program vypíše chybu i s "lokací" prvního nalezeného problému ve stromě, např.:
 ```
 Problem found at:
@@ -144,14 +145,30 @@ Problem found at:
   dictionary key "unit"
 ```
 
-*Bonus 3B* (`**`):
+**Příklad**:
+Tento Bencode vyhovuje pravidlům:
+```
+ld1:ai1e1:bi2eed1:ai3e1:c1:dee
+```
+
+Tento bencode není OK kvůli kolizi typů na položce `b`:
+```
+ld1:ai1e1:bi2eed1:ai3e1:c1:dee
+```
+
+Tento bencode je OK:
+```
+lleli1ei2ei3eelee
+```
+
+**Bonus 3B** (`**`):
 Informaci o očekávaném obsahu stromu shrňte nějakým hmatatelným schématem --
 inspirovat se můžete např. Haskellovými algebraickými typy, JSONovými schématy,
 nebo Typescriptovými záznamovými typy. Schéma vyjádřete nějakou rozumnou
 datovou strukturou, a odvozené schéma při úspěšné kontrole vypište (uživatel ho
 pak může porovnat s očekáváním).
 
-*Bonus 3C* (`***`):
+**Bonus 3C** (`***`):
 Vyrobte program umožňující zkontrolovat kompatibilitu 2 schémat. Pravidlo: data
 A vyhovují schématu B pokud je schéma A "podmnožina" schématu B -- v A např.
 některé klíče slovníků můžou chybět, a schémata arrayí nemusí být úplná protože
