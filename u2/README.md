@@ -153,7 +153,7 @@ ld1:ai1e1:bi2eed1:ai3e1:c1:dee
 
 Tento bencode není OK kvůli kolizi typů na položce `b`:
 ```
-ld1:ai1e1:bi2eed1:ai3e1:c1:dee
+ld1:ai1e1:bi2eed1:ai3e1:b1:dee
 ```
 
 Tento bencode je OK:
