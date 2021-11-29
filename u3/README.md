@@ -170,9 +170,9 @@ např. `cursorX . filtered (<31) += 1`.)
 
 ## Extrémní bonus
 
-Do serveru implementujte podporu zpráv `nick jmenoUmelce` a `cursorPos x y`,
-kterými uživatel oznamuje jak se jmenuje a kde právě edituje, a `cursorAt
-jmenoUmelce x y` a `lost jmenoUmelce`, kterymi server oznamuje, kde který
+Do serveru implementujte podporu zpráv `Nick jmenoUmelce` a `CursorPos x y`,
+kterými uživatel oznamuje jak se jmenuje a kde právě edituje, a `CursorAt
+jmenoUmelce x y` a `Lost jmenoUmelce`, kterymi server oznamuje, kde který
 uživatel právě edituje, případně odpojení uživatele (zmizení jeho kurzoru).
 
 Kurzory všech připojených uživatelů renderujte v GUI.
