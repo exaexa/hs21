@@ -129,7 +129,6 @@ runConn com h = do
                 loop
   let sendLoop =
         forever $
-          -- TODO case here
          do
           x <- atomically $ readTChan myChan
           case x of
