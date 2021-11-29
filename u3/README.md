@@ -18,7 +18,7 @@ operačního systému, nebo pollování museli implementovat ručně.
 
 ## Předběžnosti
 
-K dispozici máte [jednoduchou implementaci serveru malování](golserver.hs).
+K dispozici máte [jednoduchou implementaci serveru malování](paintserver.hs).
 Server umožnuje víc uživatelům přes internet editovat jedinou "kreslící plochu" s jedním obrázkem.
 Velikost papíru je pro účely domácího úkolu vždycky přesně 32×32 pixelů.
 
