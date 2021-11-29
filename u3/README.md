@@ -86,7 +86,7 @@ a `>` pro zprávy od serveru.)
 Můžete si vyzkoušet i [pomocný testovací program](sendpixel.hs), který resolvuje
 adresu serveru, připojí se k ní, pošle dva příkazy (`Dark 0 0` a `Poll`) a na výstup
 vypíše výsledek. (Program se odpojuje celkem hrubě zavřením
-socketu, ne příkazem `quit`. Server proto bude pravděpodobně vypisovat
+socketu, ne příkazem `Quit`. Server proto bude pravděpodobně vypisovat
 odpovídající stížnosti o neočekávaném odpojení klienta.)
 
 ## Úkol
